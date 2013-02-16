@@ -1,0 +1,11 @@
+---
+layout: post
+title: "Use jekyll bootstrap"
+description: ""
+categories: [blog]
+tags: [jekyll, bootstrap]
+---
+{% include JB/setup %}
+
+
+
