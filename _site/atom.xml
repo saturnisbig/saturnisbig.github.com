@@ -4,13 +4,77 @@
  <title>Teddy Food</title>
  <link href="http://saturnisbig.github.com/atom.xml" rel="self"/>
  <link href="http://saturnisbig.github.com"/>
- <updated>2013-02-16T19:42:11+08:00</updated>
+ <updated>2013-02-17T21:09:36+08:00</updated>
  <id>http://saturnisbig.github.com</id>
  <author>
    <name>Teddy</name>
    <email>i.kenting@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>sqlite export and import</title>
+   <link href="http://saturnisbig.github.com/programming/2013/02/17/sqlite-export-and-import"/>
+   <updated>2013-02-17T00:00:00+08:00</updated>
+   <id>http://saturnisbig.github.com/programming/2013/02/17/sqlite-export-and-import</id>
+   <content type="html">&lt;h2 id='export'&gt;export&lt;/h2&gt;
+
+&lt;p&gt;-to sql file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    $sqlite test.db
+    sqlite&amp;gt;.output data.sql
+    sqlite&amp;gt;.dump (table1 table2)&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-to another db&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    $sqlite3 test.db &amp;quot;.dump&amp;quot; | sqlite3 test2.db&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-export table structure&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    $sqlite3 db1
+    $sqlite&amp;gt; .tables
+    t1  tx
+    $sqlite&amp;gt; select * from t1;
+    |A
+    |B
+    $sqlite&amp;gt; .q
+    
+    $sqlite3 db2
+    $sqlite&amp;gt; .tables
+    $sqlite&amp;gt; ATTACH DATABASE db1 as db1;
+    $sqlite&amp;gt; select * from db1.t1;
+    |A
+    |B
+    $sqlite&amp;gt; create table t2 as select * from db1.t1 where 1=2;
+    $sqlite&amp;gt; select * from t2;
+    |A
+    |B&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='import'&gt;import&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;sqlite&amp;gt;.seperator &amp;quot;,&amp;quot;
+sqlite&amp;gt;.import data.sql db_table
+sqlite&amp;gt;select * from db_table&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='id1'&gt;使用工具&lt;/h2&gt;
+
+&lt;p&gt;用SQLite Developer,工具-&amp;gt;提取数据库SCHEMA和数据-&amp;gt; 选择表-&amp;gt;输入导出文件名，既可导出&lt;/p&gt;
+
+&lt;h2 id='mysql'&gt;和MySQL的转换&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;mysql2sqlite&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;convert mysql to sqlite.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysqldump -h 127.0.0.1 -P 3307 -u root --default-character-set=utf8 -ppasswd dbname | dumpfile.txt
+$print hello &lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;sqlite to mysql&lt;/li&gt;
+&lt;/ol&gt;</content>
+ </entry>
  
  <entry>
    <title>hello jekyll</title>

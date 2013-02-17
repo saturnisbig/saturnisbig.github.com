@@ -7,10 +7,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Categories</title>
+	<title>sqlite export and import</title>
 	<meta name="author" content="Teddy">
 	<link href='/assets/themes/the-program/css/style.css' rel="stylesheet" media="all">
-	<link href="http://feeds.feedburner.com/" rel="alternate" title="Categories" type="application/atom+xml">
+	<link href="http://feeds.feedburner.com/" rel="alternate" title="sqlite export and import" type="application/atom+xml">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
 </head>
 <body>
@@ -41,24 +41,89 @@
 			<div class="unit-inner unit-body-inner">
 				<div class="entry-content">
 					
-<article class="unit-article layout-page">
+<article class="unit-article layout-post">
 	<div class="unit-inner unit-article-inner">
 		<div class="content">
 			<header>
 				<div class="unit-head">
 					<div class="unit-inner unit-head-inner">
-						<h1 class="h2 entry-title">Categories</h1>
+						<h1 class="h2 entry-title">sqlite export and import</h1>
 					</div><!-- unit-inner -->
 				</div><!-- unit-head -->
 			</header>
 
 			<div class="bd">
 				<div class="entry-content">
-					
+					<h2 id='export'>export</h2>
 
-<ul class="tag_box inline">
-  
-  
+<p>-to sql file</p>
+
+<pre><code>    $sqlite test.db
+    sqlite&gt;.output data.sql
+    sqlite&gt;.dump (table1 table2)</code></pre>
+
+<p>-to another db</p>
+
+<pre><code>    $sqlite3 test.db &quot;.dump&quot; | sqlite3 test2.db</code></pre>
+
+<p>-export table structure</p>
+
+<pre><code>    $sqlite3 db1
+    $sqlite&gt; .tables
+    t1  tx
+    $sqlite&gt; select * from t1;
+    |A
+    |B
+    $sqlite&gt; .q
+    
+    $sqlite3 db2
+    $sqlite&gt; .tables
+    $sqlite&gt; ATTACH DATABASE db1 as db1;
+    $sqlite&gt; select * from db1.t1;
+    |A
+    |B
+    $sqlite&gt; create table t2 as select * from db1.t1 where 1=2;
+    $sqlite&gt; select * from t2;
+    |A
+    |B</code></pre>
+
+<h2 id='import'>import</h2>
+
+<pre><code>sqlite&gt;.seperator &quot;,&quot;
+sqlite&gt;.import data.sql db_table
+sqlite&gt;select * from db_table</code></pre>
+
+<h2 id='id1'>使用工具</h2>
+
+<p>用SQLite Developer,工具-&gt;提取数据库SCHEMA和数据-&gt; 选择表-&gt;输入导出文件名，既可导出</p>
+
+<h2 id='mysql'>和MySQL的转换</h2>
+
+<ol>
+<li>mysql2sqlite</li>
+</ol>
+
+<p>convert mysql to sqlite.</p>
+
+<pre><code>mysqldump -h 127.0.0.1 -P 3307 -u root --default-character-set=utf8 -ppasswd dbname | dumpfile.txt
+$print hello </code></pre>
+
+<ol>
+<li>sqlite to mysql</li>
+</ol>
+					<div class="meta">
+						<p class="date-publish">
+							Published: 
+							<date class="date-pub" title="2013-02-17T00:00:00+08:00" datetime="2013-02-17T00:00:00+08:00" pubdate>
+							<span class="month"><abbr>February</abbr></span>
+							<span class="day">17</span>
+							<span class="year">2013</span>
+							</date>
+						</p>
+						<ul class="list-category list-linear">
+							<li class="list-head">category: </li>
+							
+							
 
 
   
@@ -70,37 +135,69 @@
   
 
 
-</ul>
-
-
- 
-  <h2 id="programming-ref">programming</h2>
-  <ul>
-      
-    
+						</ul>
+						<ul class="list-tag list-linear">
+							<li class="list-head">tags: </li>
+							
+							
 
 
   
-    
-      
-      	
-      	<li><a href="/programming/2013/02/17/sqlite-export-and-import">sqlite export and import</a></li>
-      	
-      
+     
+    	<li><a href="/tags.html#sqlite-ref">sqlite <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#python-ref">python <span>1</span></a></li>
     
   
 
 
 
-  </ul>
-
-
-
+						</ul>
+					</div><!-- meta -->
 				</div><!-- entry-content -->
-			</div><!-- bd -->
+				<div class="misc-content">
+					<div class="social">
+						<ul class="list-linear">
+							<li><div class="twitter-tweet"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="" data-lang="en">Tweet</a></div></li>
+							<li><div class="twitter-follow"><a href="https://twitter.com/" class="twitter-follow-button" data-show-count="false" data-lang="en"></a></div></li>
+						</ul>
+					</div>
+					<div class="comment">
+					
 
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'teddy007'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+					</div>
+				</div><!-- misc-content -->
+			</div><!-- bd -->
 			<footer class="unit-foot">
 				<div class="unit-inner unit-foot-inner">
+					<nav class="pagination">
+						<ul>
+							
+							<li class="prev"><a class="internal" rel="prev"  href="/2013/02/16/hello-jekyll" title="View hello jekyll">&laquo; hello jekyll</a></li>
+							
+							
+							
+						</ul>
+					</nav>
 					<p class="gotop">
 						<a href="#page">Back to Top</a>
 					</p>
