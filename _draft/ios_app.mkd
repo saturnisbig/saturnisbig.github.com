@@ -1,0 +1,101 @@
+---
+layout: post
+title: "开始ios dev"
+description: ""
+categories: [ios-dev]
+tags: [ios dev, 资料]
+---
+{% include JB/setup %}
+
+# IOS 开发的资料
+
+Time: 2013-03-09 16:00:00 To 2013-03-09 17:06:09 
+
+
+## 开始ios的开发
+
+1. 先熟悉objective-c的语法及xcode环境，预计花两周的时间，每天2小时+0.5小时总结；
+
+2. 熟悉ios开发的sdk，阅读帮助文档，将UIView搞清楚，学习Standford的视频教程；(?时间)
+View Programming Guide for ios  [https://developer.apple.com/library/ios/#documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009503][]
+
+3. 开发自己的应用，发布到app store上。 
+
+
+## 网络上的资源：
+- 经验介绍
+1. 《做IOS开发这一年》(一个IOS开发者一年的总结)
+http://www.cnblogs.com/smileEvday/archive/2012/07/01/2571582.html
+
+2. IOS开发入门实例(CSDN上的专栏文章，详细介绍IOS开发如梦)
+http://blog.csdn.net/column/details/ios-learning1.html
+
+3. 没有基础如何快速学习IOS开发(知乎上的答案)
+http://www.zhihu.com/question/19627420
+
+>先学object-c 2.0程序设计
+>看Standford的视频教程 or Iphone3开发基础教程(Dave Mark)示例代码全部敲一遍
+>研究苹果的官方示例代码，逛cocoachina， iphonedev, github等
+>游戏编程的话: http://www.raywenderlich.com上学习cocos2d or cocos3d
+>社交网络上关注技术牛人，经常*交流*、学习
+>坚持
+
+4. 如何才能系统的学习IOS开发，理解一些规则和深层次的机制原理
+http://www.zhihu.com/question/20016551/answer/13680483
+
+这个回答详细介绍了如何系统学习IOS开发，逐步分解，逐个击破。
+
+5. 怎样开始IOS开发之路？要准备和学习什么？
+http://www.geekaa.com/t/532
+
+>知乎相关问题地址：
+>http://www.zhihu.com/question/19633131
+>
+>答案总结
+>
+>这里推荐一种初学者的学习方法,
+>1 先学好任何一种语言的面向对象
+>
+>2 学习objective-C语法,如果没有基础直接学语法简直就是天书,基本objective-C基本
+>能把键盘上的符号都用上了.如果没有理解结构能看晕过去,我觉得语法是objective-C
+>最大的门槛.很多人看这种语法瞬间没了心情,但是如果有面向对象的基础很容易理解.
+>
+>3 环境调试, 我还是推荐直接买个苹果电脑吧 Mac Mini最便宜的. 否则在PC上装苹果系统
+>可能折腾两天连安装界面都看不到直接打击积极性.
+>
+>4 花钱买99美元的个人开发者帐号 企业299美元, 然后慢慢熟悉发布调试流程. 
+>http://www.fbair.net/bbs/read.php?tid=276
+>
+>然后就是一定先开发一个小游戏卖一下试下水,否则很多流程你接触不到.估计最短也要
+>半个月时间来熟悉这一切, 在加上苹果审核时间,没一个月基本上连入门都不够.
+>
+>至于看书我感觉还是看网上看吧 官方网站都有基本的入门教程, xcode4也很新.
+>官方网站教程 http://www.apple.com.cn/developer/mac/library/navigation/ios.html
+>所有类库 http://developer.apple.com/library/ios/navigation/
+>
+>书籍:
+>iPhone App Development: The Missing Mannul
+>http://appdevmanual.com/
+>推荐这本书，从安装 XCode 到开发再到 App 上架销售追踪，书里都有涉及，并且在书后的 Appendix 给出了相关话题更深入的资源去处。 
+>>
+
+- 相关工具
+1. 10个必需的IOS开发工具和资源 
+http://coolshell.cn/articles/5089.html
+
+
+- 八卦
+1. 开发一个IOS应用没有那么容易(新加坡的IOS开发者吐槽IOS开发的文章)
+http://www.williamlong.info/archives/3061.html
+
+- 博客
+1. http://www.raywenderlich.com/ (IOS/Iphone游戏开发教程)
+2. http://blog.csdn.net/ostrichmyself/article/details/7782089 ()
+3. http://blog.csdn.net/ostrichmyself/article/category/1078482
+
+
+- Q && A (问答地方)
+
+1. cocoachina: http://www.cocoachina.com/
+2. stackoverflow上
+3. iphonedev上

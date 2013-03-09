@@ -4,13 +4,113 @@
  <title>Teddy Food</title>
  <link href="http://saturnisbig.github.com/atom.xml" rel="self"/>
  <link href="http://saturnisbig.github.com"/>
- <updated>2013-02-17T21:09:36+08:00</updated>
+ <updated>2013-03-09T20:24:30+08:00</updated>
  <id>http://saturnisbig.github.com</id>
  <author>
    <name>Teddy</name>
    <email>i.kenting@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>开始ios dev</title>
+   <link href="http://saturnisbig.github.com/ios-dev/2013/03/09/ios-dev"/>
+   <updated>2013-03-09T00:00:00+08:00</updated>
+   <id>http://saturnisbig.github.com/ios-dev/2013/03/09/ios-dev</id>
+   <content type="html">&lt;h1 id='ios_'&gt;IOS 开发的资料&lt;/h1&gt;
+
+&lt;p&gt;Time: 2013-03-09 16:00:00 To 2013-03-09 17:06:09&lt;/p&gt;
+
+&lt;h2 id='ios'&gt;开始ios的开发&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;先熟悉objective-c的语法及xcode环境，预计花两周的时间，每天2小时+0.5小时总结；&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;熟悉ios开发的sdk，阅读帮助文档，将UIView搞清楚，学习Standford的视频教程；(?时间) &lt;a href='https://developer.apple.com/library/ios/#documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009503'&gt;View Programming Guide for ios&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;开发自己的应用，发布到app store上。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='id2'&gt;网络上的资源：&lt;/h2&gt;
+
+&lt;p&gt;- 经验介绍 1. &lt;a href='http://www.cnblogs.com/smileEvday/archive/2012/07/01/2571582.html'&gt;《做IOS开发这一年》(一个IOS开发者一年的总结)&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='http://blog.csdn.net/column/details/ios-learning1.html'&gt;IOS开发入门实例(CSDN上的专栏文章，详细介绍IOS开发)&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='http://www.zhihu.com/question/19627420'&gt;没有基础如何快速学习IOS开发(知乎上的答案)&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;先学object-c 2.0程序设计 看Standford的视频教程 or Iphone3开发基础教程(Dave Mark)示例代码全部敲一遍 研究苹果的官方示例代码，逛cocoachina， iphonedev, github等 游戏编程的话: http://www.raywenderlich.com上学习cocos2d or cocos3d 社交网络上关注技术牛人，经常&lt;em&gt;交流&lt;/em&gt;、学习 坚持&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href='http://www.zhihu.com/question/20016551/answer/13680483'&gt;如何才能系统的学习IOS开发，理解一些规则和深层次的机制原理&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这个回答详细介绍了如何系统学习IOS开发，逐步分解，逐个击破。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href='http://www.geekaa.com/t/532'&gt;怎样开始IOS开发之路？要准备和学习什么?&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;知乎相关问题地址： http://www.zhihu.com/question/19633131&lt;/p&gt;
+
+&lt;p&gt;答案总结&lt;/p&gt;
+
+&lt;p&gt;这里推荐一种初学者的学习方法, 1 先学好任何一种语言的面向对象&lt;/p&gt;
+
+&lt;p&gt;2 学习objective-C语法,如果没有基础直接学语法简直就是天书,基本objective-C基本 能把键盘上的符号都用上了.如果没有理解结构能看晕过去,我觉得语法是objective-C 最大的门槛.很多人看这种语法瞬间没了心情,但是如果有面向对象的基础很容易理解.&lt;/p&gt;
+
+&lt;p&gt;3 环境调试, 我还是推荐直接买个苹果电脑吧 Mac Mini最便宜的. 否则在PC上装苹果系统 可能折腾两天连安装界面都看不到直接打击积极性.&lt;/p&gt;
+
+&lt;p&gt;4 花钱买99美元的个人开发者帐号 企业299美元, 然后慢慢熟悉发布调试流程. http://www.fbair.net/bbs/read.php?tid=276&lt;/p&gt;
+
+&lt;p&gt;然后就是一定先开发一个小游戏卖一下试下水,否则很多流程你接触不到.估计最短也要 半个月时间来熟悉这一切, 在加上苹果审核时间,没一个月基本上连入门都不够.&lt;/p&gt;
+
+&lt;p&gt;至于看书我感觉还是看网上看吧 官方网站都有基本的入门教程, xcode4也很新. 官方网站教程 http://www.apple.com.cn/developer/mac/library/navigation/ios.html 所有类库 http://developer.apple.com/library/ios/navigation/&lt;/p&gt;
+
+&lt;p&gt;书籍: iPhone App Development: The Missing Mannul http://appdevmanual.com/ 推荐这本书，从安装 XCode 到开发再到 App 上架销售追踪，书里都有涉及，并且在书后的 Appendix 给出了相关话题更深入的资源去处。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;- 相关工具 1. &lt;a href='http://coolshell.cn/articles/5089.html'&gt;10个必需的IOS开发工具和资源&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;- 八卦 1. &lt;a href='http://www.williamlong.info/archives/3061.html'&gt;开发一个IOS应用没有那么容易(新加坡的IOS开发者吐槽IOS开发的文章)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;- 博客&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;http://www.raywenderlich.com/ (IOS/Iphone游戏开发教程)&lt;/li&gt;
+
+&lt;li&gt;http://blog.csdn.net/ostrichmyself/article/details/7782089 ()&lt;/li&gt;
+
+&lt;li&gt;http://blog.csdn.net/ostrichmyself/article/category/1078482&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Q &amp;amp;&amp;amp; A (问答地方)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;cocoachina: http://www.cocoachina.com/&lt;/li&gt;
+
+&lt;li&gt;stackoverflow上&lt;/li&gt;
+
+&lt;li&gt;iphonedev上&lt;/li&gt;
+&lt;/ol&gt;</content>
+ </entry>
  
  <entry>
    <title>sqlite export and import</title>
