@@ -7,10 +7,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Vim fileencoding</title>
+	<title>体无完肤</title>
 	<meta name="author" content="Teddy">
 	<link href='/assets/themes/the-program/css/style.css' rel="stylesheet" media="all">
-	<link href="http://feeds.feedburner.com/" rel="alternate" title="Vim fileencoding" type="application/atom+xml">
+	<link href="http://feeds.feedburner.com/" rel="alternate" title="体无完肤" type="application/atom+xml">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
 </head>
 <body>
@@ -47,70 +47,26 @@
 			<header>
 				<div class="unit-head">
 					<div class="unit-inner unit-head-inner">
-						<h1 class="h2 entry-title">Vim fileencoding</h1>
+						<h1 class="h2 entry-title">体无完肤</h1>
 					</div><!-- unit-inner -->
 				</div><!-- unit-head -->
 			</header>
 
 			<div class="bd">
 				<div class="entry-content">
-					<h1 id='vim'>Vim文件编码问题</h1>
+					<p>从毕业到现在，自己真的是生活在一种很理想的状态下，就像未涉世的孩子， 不懂人间烟火。总以为自己要不一样，但是从未想过要怎么去不一样。 总觉得要去改变，却什么也改变不了。早些时候，就告诉自己，要去面对 现实。现在，是慢慢体会到了。比如，从学校出来后，主要的问题是如何赚很多钱。 刚开始的时候，会无所谓，觉得钱够用就行。经过了一些事，觉得是自己忘记了一些曾经咬住 不放的东西，“别人能做到的事，经过努力，自己也能做到。”读书是，赚钱亦如此。</p>
 
-<p>在Windows下用GVIM编辑了一个HTML文件，Ubuntu下在gterminal下用vim打开， 文件内的中文呈现乱码。我将乱码的内容删除，并输入中文，在保存文件的时候 出现了“转换错误（Conversion ERROR） ”，无法将编辑后的文件保存。为什么 出现这个问题呢？是不是g-terminal编码设置的问题，可是我的gterminal能够 正常的显示中文，且编码设置为uft-8，所以g-terminal应该不是问题的所在， 于是就发现必须要了解下vim是如何处理编码的问题。从互联网上搜集了相关资料如下：</p>
+<p><em>这是观念的问题，观念很重要。</em>前天在网上看到一篇博文《为什么你成不了富人》， 里面的很多观点说得蛮有道理的。观念的转变，欲望，计划，坚持不懈&#8230;如果你有赚钱 的欲望，你就会开动脑筋。要有欲望，必须先摒弃旧的观点：有多少钱就过怎样的生活， 那么多钱有什么用&#8230;这些都是生活中，某些人不知不觉灌输给我们的。只要简单想一下： 有钱有什么错？这样你就可以支配自己的时间，去做更有意义的事，不然，你就得在 办公室那小隔间，浪费自己的时间，做自己不想又不得不做的事，生怕断了经济来源。 观念转变后，你慢慢就会问自己，那要怎样去赚钱呢？这时候，我们的大脑真正开动 起来，欲望也随之产生，然后就是做计划。要赚钱，并不是那么简单，没有一个计划， 是坚持不了多久的。这时，你就会去制订计划。计划制定好之后，就是要坚持下去。要成为 富人并不是像想象中的那样简单的，必须付出更多的努力，没有很强的欲望是坚持不下来的。 所以，要坚持下去。</p>
 
-<p>关于编码 ：gb2312是在ASCII基础上扩展得到的，后来又扩充了gbk和gb18030，其 中最新版的gb18030是05年才release出来，在常用简体中文字上，三种编码是完全兼容的， 只是新的标准增加了很多生僻字、偏旁部首和繁体字。unicode是和ascII完全不同的 一套编码方案，utf8就 是基于这种方案的一种编码，utf8包含有除中文外的其他多国语言， 适合全球使用，所以utf8的体积要比gb系的字符集合大很多，但在中文字方面， 和 gb18030相当，其编码和gb系完全不兼容。</p>
+<p>昨天下午去看房子，场面相当火爆，售楼员，买的人。这就是现实。第一次来这个地方， 空气挺清新，过个高速，半小时就到了，前提是要有车。毕业前，从没想在这里待长久， 而如今，必须面对这样一个事实。每次被问，不然，你有什么打算？实在不懂得怎么去回答。 总之，还是自己经济无法独立，不然可以有更多的选择，更肯定的回答。每一次碰到现实的问题， 结婚、买房、家庭&#8230;总有被伤得体无完肤的感觉！这并没有什么坏处，认清现实，自己就 会越有动力，一如上学时代不服输的我！</p>
 
-<h2 id='vim'>VIM中相关的选项</h2>
-
-<ol>
-<li>
-<p>Vim 有四个跟字符编码方式有关的选项：encoding、fileencoding、fileencodings、 termencoding (这些选项可能的取值请参考 Vim 在线帮助 :help encoding-names)， 它们的意义如下:</p>
-
-<blockquote>
-<p>encoding: Vim 内部使用的字符编码方式，包括 Vim 的 buffer (缓冲区)、菜单文本、消息文本等。用户手册上建议只在 .vimrc 中改变它的值，事实上似乎也只有在 .vimrc 中改变它的值才有意义。</p>
-</blockquote>
-
-<p>fileencoding: Vim 中当前编辑的文件的字符编码方式，Vim 保存文件时也会将文件保存为这种字符编码方式 (不管是否新文件都如此)。 fileencodings: Vim 启动时会按照它所列出的字符编码方式逐一探测即将打开的文件的字符编码方式，并且将 fileencoding 设置为最终探测到的字符编码方式。因此最好将 Unicode 编码方式放到这个列表的最前面，将拉丁语系编码方式 latin1 放到最后面。 termencoding: Vim 所工作的终端 (或者 Windows 的 Console 窗口) 的字符编码方式。这个选项在 Windows 下对我们常用的 GUI 模式的 gVim 无效，而对 Console 模式的 Vim 而言就是 Windows 控制台的代码页，并且通常我们不需要改变它。</p>
-</li>
-
-<li>
-<p>Vim 的多字符编码方式工作方式：</p>
-</li>
-</ol>
-
-<ul>
-<li>
-<p>Vim 启动，根据.vimrc 中设置的 encoding 的值来设置 buffer、菜单文本、消息文的字符编码方式。</p>
-</li>
-
-<li>
-<p>读取需要编辑的文件，根据 fileencodings 中列出的字符编码方式逐一探测该文件编码方式。并设置 fileencoding 为探测到的，看起来是正确的 (注1) 字符编码方式。</p>
-</li>
-
-<li>
-<p>对比 fileencoding 和 encoding 的值，若不同则调用 iconv 将文件内容转换为 encoding 所描述的字符编码方式，并且把转换后的内容放到为此文件开辟的 buffer 里，此时我们就可以开始编辑这个文件了。注意，完成这一步动作需要调用外部的 iconv.dll，你需要保证这个文件存在于 $VIMRUNTIME 或者其他列在 PATH 环境变量中的目录里。</p>
-</li>
-
-<li>
-<p>编辑完成后保存文件时，再次对比 fileencoding 和 encoding 的值。若不同，再次调用 iconv 将即将保存的 buffer 中的文本转换为 fileencoding 所描述的字符编码方式，并保存到指定的文件中。同样，这需要调用 iconv.dll</p>
-</li>
-</ul>
-
-<h2 id='id3'>解决此问题的方式为：</h2>
-
-<p>在.vimrc中设置，“set fileencodings=ucs-bom,utf-8,GB18030,gbk”</p>
-
-<p>其他一些有用的内容如下 ：</p>
-
-<p>查看当前文件编码的方式为：“:set fileencoding”；对文件编码进行转换：“:set fileencoding=utf-8”</p>
-
-<p>外部链接： <a href='http://lijing00333.wordpress.com/2011/02/08/linux%E4%B8%8B%E5%9F%BA%E4%BA%8Evim%E7%9A%84%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/'>此文讲的内容比较使用</a> <a href='http://blog.chinaunix.net/space.php?uid=24173732&amp;do=blog&amp;cuid=2289853'>这篇文章搜集大部分网上资料</a> <a href='http://ued.taobao.com/blog/2011/08/26/encode-war/'>这篇文章探讨了浏览器解析网页过程中的编码问题</a></p>
+<p>加油！转变观念，向前吧，Teddy!</p>
 					<div class="meta">
 						<p class="date-publish">
 							Published: 
-							<date class="date-pub" title="2013-03-10T00:00:00+08:00" datetime="2013-03-10T00:00:00+08:00" pubdate>
+							<date class="date-pub" title="2013-03-31T00:00:00+08:00" datetime="2013-03-31T00:00:00+08:00" pubdate>
 							<span class="month"><abbr>March</abbr></span>
-							<span class="day">10</span>
+							<span class="day">31</span>
 							<span class="year">2013</span>
 							</date>
 						</p>
@@ -122,8 +78,8 @@
 
   
      
-    	<li><a href="/categories.html#tools-ref">
-    		tools <span>1</span>
+    	<li><a href="/categories.html#life-ref">
+    		life <span>1</span>
     	</a></li>
     
   
@@ -138,9 +94,11 @@
 
   
      
-    	<li><a href="/tags.html#vim-ref">vim <span>1</span></a></li>
+    	<li><a href="/tags.html#反思-ref">反思 <span>1</span></a></li>
      
-    	<li><a href="/tags.html#fileencoding-ref">fileencoding <span>1</span></a></li>
+    	<li><a href="/tags.html#成长-ref">成长 <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#奋斗-ref">奋斗 <span>1</span></a></li>
     
   
 
@@ -186,13 +144,9 @@
 					<nav class="pagination">
 						<ul>
 							
-							<li class="prev"><a class="internal" rel="prev"  href="/ios-dev/2013/03/09/ios-dev" title="View 开始ios dev">&laquo; 开始ios dev</a></li>
+							<li class="prev"><a class="internal" rel="prev"  href="/tools/2013/03/10/vim-file-encoding" title="View Vim fileencoding">&laquo; Vim fileencoding</a></li>
 							
 							
-							<li class="pipe"> | </li>
-							
-							
-							<li class="next"><a class="internal" rel="next"  href="/life/2013/03/31/tiwuwanfu" title="View 体无完肤">体无完肤 &raquo;</a></li>
 							
 						</ul>
 					</nav>
