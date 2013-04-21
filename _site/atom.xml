@@ -4,7 +4,7 @@
  <title>Teddy Food</title>
  <link href="http://saturnisbig.github.com/atom.xml" rel="self"/>
  <link href="http://saturnisbig.github.com"/>
- <updated>2013-04-01T23:34:29+08:00</updated>
+ <updated>2013-04-21T23:07:36+08:00</updated>
  <id>http://saturnisbig.github.com</id>
  <author>
    <name>Teddy</name>
@@ -13,7 +13,29 @@
 
  
  <entry>
-   <title>chaojia</title>
+   <title>2013 Goals</title>
+   <link href="http://saturnisbig.github.com/life/2013/04/21/2013-goals"/>
+   <updated>2013-04-21T00:00:00+08:00</updated>
+   <id>http://saturnisbig.github.com/life/2013/04/21/2013-goals</id>
+   <content type="html">&lt;h1 id='2013maybe_add_more_later'&gt;2013年目标(maybe add more later&amp;#8230;)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;结婚 (marry with pudding)&lt;/li&gt;
+
+&lt;li&gt;买房 (not sure.)&lt;/li&gt;
+
+&lt;li&gt;换手机(done)&lt;/li&gt;
+
+&lt;li&gt;制作一款手机应用 (something to manage list things.)&lt;/li&gt;
+
+&lt;li&gt;看很多书 (小说，programming，心理学etc.)&lt;/li&gt;
+
+&lt;li&gt;买一台苹果的电脑(done 2013-03-29:Mac mini, 2013-04-19:display, BenQ GL2023) - 跟布丁乘火车去旅游 - 学游泳 - 学日语&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>吵架</title>
    <link href="http://saturnisbig.github.com/2013/04/01/chaojia"/>
    <updated>2013-04-01T00:00:00+08:00</updated>
    <id>http://saturnisbig.github.com/2013/04/01/chaojia</id>
