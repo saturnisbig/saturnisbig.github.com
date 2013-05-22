@@ -4,7 +4,7 @@
  <title>Teddy Food</title>
  <link href="http://saturnisbig.github.com/atom.xml" rel="self"/>
  <link href="http://saturnisbig.github.com"/>
- <updated>2013-05-22T23:40:49+08:00</updated>
+ <updated>2013-05-22T23:25:53+08:00</updated>
  <id>http://saturnisbig.github.com</id>
  <author>
    <name>Teddy</name>
@@ -19,244 +19,203 @@
    <id>http://saturnisbig.github.com/programming/2013/05/20/setting-django-web-server-using-uwsgi-and-nginx-on-mac</id>
    <content type="html">&lt;h2 id='prepare_work'&gt;Prepare work&lt;/h2&gt;
 
-&lt;ul&gt;
-&lt;li&gt;Install Homebrew to manage your package on mac&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='install_homebrew_to_manage_your_package_on_mac'&gt;Install Homebrew to manage your package on mac&lt;/h3&gt;
 
 &lt;p&gt;因为之前安装了macport来管理软件包，安装homebrew之前想先把macport卸载了。官方文档提示作法如下：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$&lt;/code&gt;&lt;/pre&gt;
 
-&lt;ul&gt;
-&lt;li&gt;Install virtualenv and pip&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='install_virtualenv_and_pip'&gt;Install virtualenv and pip&lt;/h3&gt;
 
 &lt;h2 id='install_uwsgi_and_configuration'&gt;Install uWSGI and configuration&lt;/h2&gt;
 
-&lt;ul&gt;
-&lt;li&gt;create a virtual env and django project for this tutorial&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='create_a_virtual_env_and_django_project_for_this_tutorial'&gt;create a virtual env and django project for this tutorial&lt;/h3&gt;
 
-&lt;p&gt;命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$cd ~
+$mkdir env
+$cd env
+$virtualenv uwsgi-tutorial
+# this create a virtual env for this tutorial
+$cd uswgi-tutorial
+$pip install django
+$django-admin.py startproject mysite    # this create a project under uwsgi-tutorial named: mysite&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;  $cd ~
-  $mkdir env
-  $cd env
-  $virtualenv uwsgi-tutorial
-  # this create a virtual env for this tutorial
-  $cd uswgi-tutorial
-  $pip install django
-  $django-admin.py startproject mysite    # this create a project under uwsgi-tutorial named: mysite&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id='install_uwsgi_into_your_virtualenv'&gt;install uWSGI into your virtualenv&lt;/h3&gt;
 
-&lt;ul&gt;
-&lt;li&gt;install uWSGI into your virtualenv&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;$pip install uwsgi
+# uwsgi will locate in this place: &amp;#39;/Users/yourname/uswgi-tutorial/bin&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;命令：&lt;/p&gt;
+&lt;h3 id='test_your_uwsgi'&gt;test your uWSGI&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;  $pip install uwsgi
-  # uwsgi will locate in this place: &amp;#39;/Users/yourname/uswgi-tutorial/bin&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;test your uWSGI&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;命令： # test.py def application(env, start_response): start_response(&amp;#8216;200 OK&amp;#8217;, &lt;span&gt;(&amp;#8216;Content-Type&amp;#8217;, &amp;#8216;text/html&amp;#8217;)&lt;/span&gt;) return &amp;#8220;Hello World&amp;#8221;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  # Run uWSGI
-  $uwsgi --http :8000 --wsgi-file test.py
+&lt;pre&gt;&lt;code&gt;# test.py
+def application(env, start_response):
+    start_response(&amp;#39;200 OK&amp;#39;, [(&amp;#39;Content-Type&amp;#39;, &amp;#39;text/html&amp;#39;)])
+    return &amp;quot;Hello World&amp;quot;
 
 
-  # The options here means:
-  # http :8000: use protocol http, port 80000
-  # wsgi-file text.py:load the specified file, test.py
-  # on your browser visit: http://127.0.0.1:8000, and you will see &amp;quot;Hello World&amp;quot;
-  # if this works, it means the connection as follow
-  the web client &amp;lt;-&amp;gt;uWSGi&amp;lt;-&amp;gt;Python&lt;/code&gt;&lt;/pre&gt;
+# Run uWSGI
+$uwsgi --http :8000 --wsgi-file test.py
+
+
+# The options here means:
+# http :8000: use protocol http, port 80000
+# wsgi-file text.py:load the specified file, test.py
+# on your browser visit: http://127.0.0.1:8000, and you will see &amp;quot;Hello World&amp;quot;
+# if this works, it means the connection as follow
+the web client &amp;lt;-&amp;gt;uWSGi&amp;lt;-&amp;gt;Python&lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;test your Django project&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;test your Django project&lt;/p&gt;
+
+&lt;p&gt;$python manage.py runserver 0.0.0.0:8000 # visit http:localhost:8000, if this work, run it using uWSGI $uwsgi &amp;#8211;http :8000 &amp;#8211;module mysite.wsgi # module mysite.wsgi: load the specified wsgi module. # this means the connection as follow: the web client&amp;lt;-&amp;gt;uWSGI&amp;lt;-&amp;gt;Django&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;测试django项目能否正常运行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  $python manage.py runserver 0.0.0.0:8000
-  # visit http:localhost:8000, if this work, run it using uWSGI
-  $uwsgi --http :8000 --module mysite.wsgi
-  # module mysite.wsgi: load the specified wsgi module.
-  # this means the connection as follow:
-  the web client&amp;lt;-&amp;gt;uWSGI&amp;lt;-&amp;gt;Django&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id='basic_nginx'&gt;Basic nginx&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;install nginx on a mac using Homebrew&lt;/li&gt;
-&lt;/ul&gt;
+&lt;li&gt;
+&lt;p&gt;install nginx on a mac using Homebrew&lt;/p&gt;
 
-&lt;p&gt;使用brew命令来进行相关安装&lt;/p&gt;
+&lt;p&gt;$brew install nginx &lt;br /&gt; # install nginx in this place: &amp;#8216;/usr/local/etc/nginx/&amp;#8217; # you could start nginx by this command, but you will get some errors, telling you # that &amp;#8216;can&amp;#8217;t find the nginx.conf file&amp;#8217;. so we need some default setting for nginx. $sudo nginx # use the default configuration for nginx $sudo cp /urs/local/etc/nginx/nginx.conf.default /usr/local/etc/nginx/nginx.conf $sudo cp /urs/local/etc/nginx/mime.types.default /usr/local/etc/nginx/mime.types # now run this command, and visit this address:http://127.0.0.1:8080, and will see # some nginx welcom message. $sudo nginx&lt;/p&gt;
+&lt;/li&gt;
 
-&lt;pre&gt;&lt;code&gt;  $brew install nginx     
-  # install nginx in this place: &amp;#39;/usr/local/etc/nginx/&amp;#39;
-  # you could start nginx by this command, but you will get some errors, telling you
-  # that &amp;#39;can&amp;#39;t find the nginx.conf file&amp;#39;. so we need some default setting for nginx.
-  $sudo nginx
-  # use the default configuration for nginx
-  $sudo cp /urs/local/etc/nginx/nginx.conf.default /usr/local/etc/nginx/nginx.conf
-  $sudo cp /urs/local/etc/nginx/mime.types.default /usr/local/etc/nginx/mime.types
-  # now run this command, and visit this address:http://127.0.0.1:8080, and will see
-  # some nginx welcom message.
-  $sudo nginx&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;configure nginx for your site&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;configure nginx for your site&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;将nginx安装目录下的&amp;#8217;uwsgi_params&amp;#8217; 文件拷贝到你的project目录下。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $sudo cp /usr/local/etc/nginx/uwsgi_params ./
+&lt;pre&gt;&lt;code&gt;$sudo cp /usr/local/etc/nginx/uwsgi_params ./
 
 
-  # the content inside your nginx configuration file, we name it: &amp;#39;mysite_nginx.conf&amp;#39;
+# the content inside your nginx configuration file, we name it: &amp;#39;mysite_nginx.conf&amp;#39;
 
-  # the upstream component nginx needs to connect to
-  upstream django {
-      # server unix:////path/to/your/mysite/mysite.sock; # for a socket
-      server 127.0.0.1:8001
-  }
-  # configuration of the server
-  server {
-      the port your site will be served on
-      listen 8000;
-      the domain name it will serve for
-      server_name localhost;
-      charset utf-8;
+# the upstream component nginx needs to connect to
+upstream django {
+    # server unix:////path/to/your/mysite/mysite.sock; # for a socket
+    server 127.0.0.1:8001
+}
+# configuration of the server
+server {
+    the port your site will be served on
+    listen 8000;
+    the domain name it will serve for
+    server_name localhost;
+    charset utf-8;
 
-      max upload size
-      client_max_body_size 75M;
+    max upload size
+    client_max_body_size 75M;
 
-      # Django media
-      location /media {
-          alias /path/to/your/mysite/mysite/media; # your django project&amp;#39;s media file
-      }
-      location /static {
-          alias /path/to/your/mysite/mysite/static; #your django project&amp;#39;s static file.
-      }
-      # finally, send all non-media requests to the django server.
-      location / {
-          uwsgi_pass django;
-          include /path/to/you/mysite/uwsgi_params;
-      }
-  }&lt;/code&gt;&lt;/pre&gt;
+    # Django media
+    location /media {
+        alias /path/to/your/mysite/mysite/media; # your django project&amp;#39;s media file
+    }
+    location /static {
+        alias /path/to/your/mysite/mysite/static; #your django project&amp;#39;s static file.
+    }
+    # finally, send all non-media requests to the django server.
+    location / {
+        uwsgi_pass django;
+        include /path/to/you/mysite/uwsgi_params;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;之后，在nginx的默认配置文件中添加下面命令&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $sudo mkdir /usr/local/etc/nginx/sites-enabled
-  # symlink to this file from &amp;#39;/usr/local/etc/nginx/sites-enabled/&amp;#39;, so nginx can see it.
-  $sudo ln -s ~/path/to/your/mysite/mysite_nginx.conf /usr/local/etc/nginx/sites-enabled/
-  $vim /usr/local/etc/nginx/nginx.conf
-  # add this to the end of &amp;#39;nginx.conf&amp;#39; file, inside the &amp;#39;http&amp;#39; part before the end &amp;#39;}&amp;#39; char.
-  # make nginx to include the file inside &amp;#39;sites-enabled&amp;#39;
-  include /usr/local/etc/nginx/sites-enabled/*
-  # restart nginx
-  $sudo nginx -s stop
-  $sudo nginx&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$sudo mkdir /usr/local/etc/nginx/sites-enabled
+# symlink to this file from &amp;#39;/usr/local/etc/nginx/sites-enabled/&amp;#39;, so nginx can see it.
+$sudo ln -s ~/path/to/your/mysite/mysite_nginx.conf /usr/local/etc/nginx/sites-enabled/
+$vim /usr/local/etc/nginx/nginx.conf
+# add this to the end of &amp;#39;nginx.conf&amp;#39; file, inside the &amp;#39;http&amp;#39; part before the end &amp;#39;}&amp;#39; char.
+# make nginx to include the file inside &amp;#39;sites-enabled&amp;#39;
+include /usr/local/etc/nginx/sites-enabled/*
+# restart nginx
+$sudo nginx -s stop
+$sudo nginx&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id='nginx_and_uwsgi'&gt;nginx and uWSGI&lt;/h2&gt;
 
-&lt;ul&gt;
-&lt;li&gt;建立uWSGI和nginx关联&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='uwsginginx'&gt;建立uWSGI和nginx关联&lt;/h3&gt;
 
-&lt;p&gt;命令：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  $uwsgi --socket :8001 --wsgi-file test.py
-  # socket :8001: use protocol uwsgi, port 8001
-  # 因为我们已经配置好nginx与uWSGI的8001端口关联了。现在的关系是：
-  $the web client&amp;lt;-&amp;gt;the web server&amp;lt;-&amp;gt;the socket&amp;lt;-&amp;gt;uWSGI&amp;lt;-&amp;gt;Python&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$uwsgi --socket :8001 --wsgi-file test.py
+# socket :8001: use protocol uwsgi, port 8001
+# 因为我们已经配置好nginx与uWSGI的8001端口关联了。现在的关系是：
+$the web client&amp;lt;-&amp;gt;the web server&amp;lt;-&amp;gt;the socket&amp;lt;-&amp;gt;uWSGI&amp;lt;-&amp;gt;Python&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;如果一切正常的话，那么我们的nginx与uWSGI之间已经建立了联系，我们的mysite_nginx.conf配置文件也配置正确了。&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;using unix sockets instead of ports&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='using_unix_sockets_instead_of_ports'&gt;using unix sockets instead of ports&lt;/h3&gt;
 
 &lt;p&gt;修改mysite_nginx.conf中的内容，将下列内容的注释取消掉&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  server unix:///path/to/your/mysite/mysite.sock; #这行的注释取消
-  # server 127.0.0.1:8001; #将这行注释掉&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;server unix:///path/to/your/mysite/mysite.sock; #这行的注释取消
+# server 127.0.0.1:8001; #将这行注释掉&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;再次运行uWSGI:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $uwsgi --socket mysite.sock --wsgi-file test.py
-  # 如果上面的命令运行不了，查看下nginx的日志会发现是权限不足，换做下面的命令
-  # nginx的日志默认在这个位置：&amp;#39;/usr/local/Cellar/nginx/1.4.1/logs/error.log&amp;#39;, 如果是通过&amp;#39;brew&amp;#39;安装的话。
-  $uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 #(very permissive, maybe use 664)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$uwsgi --socket mysite.sock --wsgi-file test.py
+# 如果上面的命令运行不了，查看下nginx的日志会发现是权限不足，换做下面的命令
+# nginx的日志默认在这个位置：&amp;#39;/usr/local/Cellar/nginx/1.4.1/logs/error.log&amp;#39;, 如果是通过&amp;#39;brew&amp;#39;安装的话。
+$uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 #(very permissive, maybe use 664)&lt;/code&gt;&lt;/pre&gt;
 
-&lt;ul&gt;
-&lt;li&gt;running django application with uwsgi and nginx&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='running_django_application_with_uwsgi_and_nginx'&gt;running django application with uwsgi and nginx&lt;/h3&gt;
 
 &lt;p&gt;运行下列命令：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $uwsgi --socket mysite.sock --module mysite.wsgi --chmod-socket=666&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$uwsgi --socket mysite.sock --module mysite.wsgi --chmod-socket=666&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;访问http:127.0.0.1:8000的话应该可以见到django项目的欢迎信息。&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;configuring uWSGI to run with .xml file&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='configuring_uwsgi_to_run_with_xml_file'&gt;configuring uWSGI to run with .xml file&lt;/h3&gt;
 
 &lt;p&gt;官方文档里面是使用的.ini配置文件，但是尝试了很多次都无法成功，后面改用.xml，it works。至于 .ini为什么不对，原因还不知道。我的.xml配置文件如下：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  # mysite_uwsgi.xml file
-  &amp;lt;uwsgi&amp;gt;
-    &amp;lt;socket&amp;gt;/path/to/your/mytest/mytest.sock&amp;lt;/socket&amp;gt;
-    &amp;lt;master/&amp;gt;
-    &amp;lt;chdir&amp;gt;/path/to/your/mytest&amp;lt;/chdir&amp;gt;
-    &amp;lt;module&amp;gt;mytest.wsgi&amp;lt;/module&amp;gt;
-    &amp;lt;chmod-socket&amp;gt;666&amp;lt;/chmod-socket&amp;gt;
-  &amp;lt;/uwsgi&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;# mysite_uwsgi.xml file
+&amp;lt;uwsgi&amp;gt;
+  &amp;lt;socket&amp;gt;/path/to/your/mytest/mytest.sock&amp;lt;/socket&amp;gt;
+  &amp;lt;master/&amp;gt;
+  &amp;lt;chdir&amp;gt;/path/to/your/mytest&amp;lt;/chdir&amp;gt;
+  &amp;lt;module&amp;gt;mytest.wsgi&amp;lt;/module&amp;gt;
+  &amp;lt;chmod-socket&amp;gt;666&amp;lt;/chmod-socket&amp;gt;
+&amp;lt;/uwsgi&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后运行命令，没错的话，应该可以正常运行：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $uwsgi -x mysite_uwsgi.xml&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$uwsgi -x mysite_uwsgi.xml&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id='install_uwsgi_systemwide_and_using_emperor_mode'&gt;install uWSGI system-wide and using Emperor mode&lt;/h2&gt;
 
-&lt;ul&gt;
-&lt;li&gt;install uWSGI system-wide&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='install_uwsgi_systemwide'&gt;install uWSGI system-wide&lt;/h3&gt;
 
 &lt;p&gt;从virtualenv中退出：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $deactive&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$deactive&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;在系统中安装uWSGI&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $sudo pip install uwsgi
-  # or install LTS(long term support)
-  $sudo pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz
-  # 在project mysite下运行测试下是否安装成功
-  $uwsgi -x mysite_uwsgi.xml &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$sudo pip install uwsgi
+# or install LTS(long term support)
+$sudo pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz
+# 在project mysite下运行测试下是否安装成功
+$uwsgi -x mysite_uwsgi.xml &lt;/code&gt;&lt;/pre&gt;
 
-&lt;ul&gt;
-&lt;li&gt;using emperor mode&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id='using_emperor_mode'&gt;using emperor mode&lt;/h3&gt;
 
-&lt;p&gt;命令：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  $sudo mkdir /etc/uwsgi
-  $sudo mkdir /etc/uwsgi/vassals
-  # symlink from the default config directory to your config file
-  $sudo ln -s /path/to/your/mysite/mysite_uwsgi.xml /etc/uwsgi/vassals
-  # run the emperor
-  $uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
-  # add &amp;#39;sudo&amp;#39; maybe.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$sudo mkdir /etc/uwsgi
+$sudo mkdir /etc/uwsgi/vassals
+# symlink from the default config directory to your config file
+$sudo ln -s /path/to/your/mysite/mysite_uwsgi.xml /etc/uwsgi/vassals
+# run the emperor
+$uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+# add &amp;#39;sudo&amp;#39; maybe.&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id='reference'&gt;reference:&lt;/h2&gt;
 
 &lt;ol&gt;
-&lt;li&gt;uwsgi wiki on readthedocs &lt;a href='https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html'&gt;Django and nginx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;uwsgi wiki on readthedocs&lt;a href='https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html'&gt;Django and nginx&lt;/a&gt;&lt;/li&gt;
 
 &lt;li&gt;install virtualenv and pip &lt;a href='http://www.v2ex.com/t/42760'&gt;Install virtualenv and pip&amp;#8211;from v2ex&lt;/a&gt;&lt;/li&gt;
 

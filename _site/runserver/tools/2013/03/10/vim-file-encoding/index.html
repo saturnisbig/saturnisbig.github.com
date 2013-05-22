@@ -7,10 +7,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>2013 Goals</title>
+	<title>Vim fileencoding</title>
 	<meta name="author" content="Teddy">
 	<link href='/assets/themes/the-program/css/style.css' rel="stylesheet" media="all">
-	<link href="http://feeds.feedburner.com/" rel="alternate" title="2013 Goals" type="application/atom+xml">
+	<link href="http://feeds.feedburner.com/" rel="alternate" title="Vim fileencoding" type="application/atom+xml">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
 </head>
 <body>
@@ -47,52 +47,70 @@
 			<header>
 				<div class="unit-head">
 					<div class="unit-inner unit-head-inner">
-						<h1 class="h2 entry-title">2013 Goals</h1>
+						<h1 class="h2 entry-title">Vim fileencoding</h1>
 					</div><!-- unit-inner -->
 				</div><!-- unit-head -->
 			</header>
 
 			<div class="bd">
 				<div class="entry-content">
-					<h1 id='2013maybe_add_more_later'>2013年目标(maybe add more later&#8230;)</h1>
+					<h1 id='vim'>Vim文件编码问题</h1>
+
+<p>在Windows下用GVIM编辑了一个HTML文件，Ubuntu下在gterminal下用vim打开， 文件内的中文呈现乱码。我将乱码的内容删除，并输入中文，在保存文件的时候 出现了“转换错误（Conversion ERROR） ”，无法将编辑后的文件保存。为什么 出现这个问题呢？是不是g-terminal编码设置的问题，可是我的gterminal能够 正常的显示中文，且编码设置为uft-8，所以g-terminal应该不是问题的所在， 于是就发现必须要了解下vim是如何处理编码的问题。从互联网上搜集了相关资料如下：</p>
+
+<p>关于编码 ：gb2312是在ASCII基础上扩展得到的，后来又扩充了gbk和gb18030，其 中最新版的gb18030是05年才release出来，在常用简体中文字上，三种编码是完全兼容的， 只是新的标准增加了很多生僻字、偏旁部首和繁体字。unicode是和ascII完全不同的 一套编码方案，utf8就 是基于这种方案的一种编码，utf8包含有除中文外的其他多国语言， 适合全球使用，所以utf8的体积要比gb系的字符集合大很多，但在中文字方面， 和 gb18030相当，其编码和gb系完全不兼容。</p>
+
+<h2 id='vim'>VIM中相关的选项</h2>
+
+<ol>
+<li>
+<p>Vim 有四个跟字符编码方式有关的选项：encoding、fileencoding、fileencodings、 termencoding (这些选项可能的取值请参考 Vim 在线帮助 :help encoding-names)， 它们的意义如下:</p>
+
+<blockquote>
+<p>encoding: Vim 内部使用的字符编码方式，包括 Vim 的 buffer (缓冲区)、菜单文本、消息文本等。用户手册上建议只在 .vimrc 中改变它的值，事实上似乎也只有在 .vimrc 中改变它的值才有意义。</p>
+</blockquote>
+
+<p>fileencoding: Vim 中当前编辑的文件的字符编码方式，Vim 保存文件时也会将文件保存为这种字符编码方式 (不管是否新文件都如此)。 fileencodings: Vim 启动时会按照它所列出的字符编码方式逐一探测即将打开的文件的字符编码方式，并且将 fileencoding 设置为最终探测到的字符编码方式。因此最好将 Unicode 编码方式放到这个列表的最前面，将拉丁语系编码方式 latin1 放到最后面。 termencoding: Vim 所工作的终端 (或者 Windows 的 Console 窗口) 的字符编码方式。这个选项在 Windows 下对我们常用的 GUI 模式的 gVim 无效，而对 Console 模式的 Vim 而言就是 Windows 控制台的代码页，并且通常我们不需要改变它。</p>
+</li>
+
+<li>
+<p>Vim 的多字符编码方式工作方式：</p>
+</li>
+</ol>
 
 <ul>
 <li>
-<p>结婚 (marry with pudding)</p>
+<p>Vim 启动，根据.vimrc 中设置的 encoding 的值来设置 buffer、菜单文本、消息文的字符编码方式。</p>
 </li>
 
 <li>
-<p>买房 (not sure.)</p>
+<p>读取需要编辑的文件，根据 fileencodings 中列出的字符编码方式逐一探测该文件编码方式。并设置 fileencoding 为探测到的，看起来是正确的 (注1) 字符编码方式。</p>
 </li>
 
 <li>
-<p>换手机(done)</p>
+<p>对比 fileencoding 和 encoding 的值，若不同则调用 iconv 将文件内容转换为 encoding 所描述的字符编码方式，并且把转换后的内容放到为此文件开辟的 buffer 里，此时我们就可以开始编辑这个文件了。注意，完成这一步动作需要调用外部的 iconv.dll，你需要保证这个文件存在于 $VIMRUNTIME 或者其他列在 PATH 环境变量中的目录里。</p>
 </li>
 
 <li>
-<p>制作一款手机应用 (something to manage list things.)</p>
-</li>
-
-<li>
-<p>看很多书 (小说，programming，心理学etc.)</p>
-</li>
-
-<li>
-<p>买一台苹果的电脑(done 2013-03-29:Mac mini, 2013-04-19:display, BenQ GL2023)</p>
+<p>编辑完成后保存文件时，再次对比 fileencoding 和 encoding 的值。若不同，再次调用 iconv 将即将保存的 buffer 中的文本转换为 fileencoding 所描述的字符编码方式，并保存到指定的文件中。同样，这需要调用 iconv.dll</p>
 </li>
 </ul>
 
-<p>- 跟布丁乘火车去旅游</p>
+<h2 id='id3'>解决此问题的方式为：</h2>
 
-<p>- 学游泳</p>
+<p>在.vimrc中设置，“set fileencodings=ucs-bom,utf-8,GB18030,gbk”</p>
 
-<p>- 学日语</p>
+<p>其他一些有用的内容如下 ：</p>
+
+<p>查看当前文件编码的方式为：“:set fileencoding”；对文件编码进行转换：“:set fileencoding=utf-8”</p>
+
+<p>外部链接： <a href='http://lijing00333.wordpress.com/2011/02/08/linux%E4%B8%8B%E5%9F%BA%E4%BA%8Evim%E7%9A%84%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/'>此文讲的内容比较使用</a> <a href='http://blog.chinaunix.net/space.php?uid=24173732&amp;do=blog&amp;cuid=2289853'>这篇文章搜集大部分网上资料</a> <a href='http://ued.taobao.com/blog/2011/08/26/encode-war/'>这篇文章探讨了浏览器解析网页过程中的编码问题</a></p>
 					<div class="meta">
 						<p class="date-publish">
 							Published: 
-							<date class="date-pub" title="2013-04-21T00:00:00+08:00" datetime="2013-04-21T00:00:00+08:00" pubdate>
-							<span class="month"><abbr>April</abbr></span>
-							<span class="day">21</span>
+							<date class="date-pub" title="2013-03-10T00:00:00+08:00" datetime="2013-03-10T00:00:00+08:00" pubdate>
+							<span class="month"><abbr>March</abbr></span>
+							<span class="day">10</span>
 							<span class="year">2013</span>
 							</date>
 						</p>
@@ -104,8 +122,8 @@
 
   
      
-    	<li><a href="/categories.html#life-ref">
-    		life <span>2</span>
+    	<li><a href="/categories.html#tools-ref">
+    		tools <span>1</span>
     	</a></li>
     
   
@@ -120,9 +138,9 @@
 
   
      
-    	<li><a href="/tags.html#2013-ref">2013 <span>1</span></a></li>
+    	<li><a href="/tags.html#vim-ref">vim <span>1</span></a></li>
      
-    	<li><a href="/tags.html#goals-ref">goals <span>1</span></a></li>
+    	<li><a href="/tags.html#fileencoding-ref">fileencoding <span>1</span></a></li>
     
   
 
@@ -168,13 +186,13 @@
 					<nav class="pagination">
 						<ul>
 							
-							<li class="prev"><a class="internal" rel="prev"  href="/2013/04/01/chaojia" title="View 吵架">&laquo; 吵架</a></li>
+							<li class="prev"><a class="internal" rel="prev"  href="/ios-dev/2013/03/09/ios-dev" title="View 开始ios dev">&laquo; 开始ios dev</a></li>
 							
 							
 							<li class="pipe"> | </li>
 							
 							
-							<li class="next"><a class="internal" rel="next"  href="/programming/2013/05/20/setting-django-web-server-using-uwsgi-and-nginx-on-mac" title="View Setting django web server using uwsgi and nginx on Mac">Setting django web server using uwsgi and nginx on Mac &raquo;</a></li>
+							<li class="next"><a class="internal" rel="next"  href="/life/2013/03/31/tiwuwanfu" title="View 体无完肤">体无完肤 &raquo;</a></li>
 							
 						</ul>
 					</nav>

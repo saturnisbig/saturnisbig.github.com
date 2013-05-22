@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 ie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Setting django web server using uwsgi and nginx on Mac</title>
+	<meta name="author" content="Teddy">
+	<link href='/assets/themes/the-program/css/style.css' rel="stylesheet" media="all">
+	<link href="http://feeds.feedburner.com/" rel="alternate" title="Setting django web server using uwsgi and nginx on Mac" type="application/atom+xml">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
+</head>
+<body>
+
+<div id="page" class="hentry">
+	<header class="the-header">
+		<div class="unit-head">
+			<div class="unit-inner unit-head-inner">
+				<nav class="nav-global">
+					<ul>
+						<li class="logo"><a href="/">Teddy Food</a></li>
+						<li class="archive"><a href="/archive.html">归档</a></li>
+						<li class="page"><a href="/pages.html">页面</a></li>
+						<li class="category"><a href="/categories.html">类别</a></li>
+						<li class="tag"><a href="/tags.html">标签</a></li>
+						<li class="about"><a href="/about.html">关于</a></li>
+                        <!--
+						<li class="forkme"><div><iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=plusjade&repo=jekyll-bootstrap&type=fork&count=true"
+									allowtransparency="true" frameborder="0" scrolling="0" width="95px" height="20px"></iframe></div></li>
+                        -->
+					</ul>
+				</nav>
+			</div><!-- unit-inner -->
+		</div><!-- unit-head -->
+	</header>
+	<div class="body" role="main">
+		<div class="unit-body">
+			<div class="unit-inner unit-body-inner">
+				<div class="entry-content">
+					
+<article class="unit-article layout-post">
+	<div class="unit-inner unit-article-inner">
+		<div class="content">
+			<header>
+				<div class="unit-head">
+					<div class="unit-inner unit-head-inner">
+						<h1 class="h2 entry-title">Setting django web server using uwsgi and nginx on Mac</h1>
+					</div><!-- unit-inner -->
+				</div><!-- unit-head -->
+			</header>
+
+			<div class="bd">
+				<div class="entry-content">
+					<h2 id='prepare_work'>Prepare work</h2>
+
+<h3 id='install_homebrew_to_manage_your_package_on_mac'>Install Homebrew to manage your package on mac</h3>
+
+<p>因为之前安装了macport来管理软件包，安装homebrew之前想先把macport卸载了。官方文档提示作法如下：</p>
+
+<pre><code>$</code></pre>
+
+<h3 id='install_virtualenv_and_pip'>Install virtualenv and pip</h3>
+
+<h2 id='install_uwsgi_and_configuration'>Install uWSGI and configuration</h2>
+
+<h3 id='create_a_virtual_env_and_django_project_for_this_tutorial'>create a virtual env and django project for this tutorial</h3>
+
+<pre><code>$cd ~
+$mkdir env
+$cd env
+$virtualenv uwsgi-tutorial
+# this create a virtual env for this tutorial
+$cd uswgi-tutorial
+$pip install django
+$django-admin.py startproject mysite    # this create a project under uwsgi-tutorial named: mysite</code></pre>
+
+<h3 id='install_uwsgi_into_your_virtualenv'>install uWSGI into your virtualenv</h3>
+
+<pre><code>$pip install uwsgi
+# uwsgi will locate in this place: &#39;/Users/yourname/uswgi-tutorial/bin&#39;</code></pre>
+
+<h3 id='test_your_uwsgi'>test your uWSGI</h3>
+
+<pre><code># test.py
+def application(env, start_response):
+    start_response(&#39;200 OK&#39;, [(&#39;Content-Type&#39;, &#39;text/html&#39;)])
+    return &quot;Hello World&quot;
+
+
+# Run uWSGI
+$uwsgi --http :8000 --wsgi-file test.py
+
+
+# The options here means:
+# http :8000: use protocol http, port 80000
+# wsgi-file text.py:load the specified file, test.py
+# on your browser visit: http://127.0.0.1:8000, and you will see &quot;Hello World&quot;
+# if this works, it means the connection as follow
+the web client &lt;-&gt;uWSGi&lt;-&gt;Python</code></pre>
+
+<ul>
+<li>
+<p>test your Django project</p>
+
+<p>$python manage.py runserver 0.0.0.0:8000 # visit http:localhost:8000, if this work, run it using uWSGI $uwsgi &#8211;http :8000 &#8211;module mysite.wsgi # module mysite.wsgi: load the specified wsgi module. # this means the connection as follow: the web client&lt;-&gt;uWSGI&lt;-&gt;Django</p>
+</li>
+</ul>
+
+<h2 id='basic_nginx'>Basic nginx</h2>
+
+<ul>
+<li>
+<p>install nginx on a mac using Homebrew</p>
+
+<p>$brew install nginx <br /> # install nginx in this place: &#8216;/usr/local/etc/nginx/&#8217; # you could start nginx by this command, but you will get some errors, telling you # that &#8216;can&#8217;t find the nginx.conf file&#8217;. so we need some default setting for nginx. $sudo nginx # use the default configuration for nginx $sudo cp /urs/local/etc/nginx/nginx.conf.default /usr/local/etc/nginx/nginx.conf $sudo cp /urs/local/etc/nginx/mime.types.default /usr/local/etc/nginx/mime.types # now run this command, and visit this address:http://127.0.0.1:8080, and will see # some nginx welcom message. $sudo nginx</p>
+</li>
+
+<li>
+<p>configure nginx for your site</p>
+</li>
+</ul>
+
+<p>将nginx安装目录下的&#8217;uwsgi_params&#8217; 文件拷贝到你的project目录下。</p>
+
+<pre><code>$sudo cp /usr/local/etc/nginx/uwsgi_params ./
+
+
+# the content inside your nginx configuration file, we name it: &#39;mysite_nginx.conf&#39;
+
+# the upstream component nginx needs to connect to
+upstream django {
+    # server unix:////path/to/your/mysite/mysite.sock; # for a socket
+    server 127.0.0.1:8001
+}
+# configuration of the server
+server {
+    the port your site will be served on
+    listen 8000;
+    the domain name it will serve for
+    server_name localhost;
+    charset utf-8;
+
+    max upload size
+    client_max_body_size 75M;
+
+    # Django media
+    location /media {
+        alias /path/to/your/mysite/mysite/media; # your django project&#39;s media file
+    }
+    location /static {
+        alias /path/to/your/mysite/mysite/static; #your django project&#39;s static file.
+    }
+    # finally, send all non-media requests to the django server.
+    location / {
+        uwsgi_pass django;
+        include /path/to/you/mysite/uwsgi_params;
+    }
+}</code></pre>
+
+<p>之后，在nginx的默认配置文件中添加下面命令</p>
+
+<pre><code>$sudo mkdir /usr/local/etc/nginx/sites-enabled
+# symlink to this file from &#39;/usr/local/etc/nginx/sites-enabled/&#39;, so nginx can see it.
+$sudo ln -s ~/path/to/your/mysite/mysite_nginx.conf /usr/local/etc/nginx/sites-enabled/
+$vim /usr/local/etc/nginx/nginx.conf
+# add this to the end of &#39;nginx.conf&#39; file, inside the &#39;http&#39; part before the end &#39;}&#39; char.
+# make nginx to include the file inside &#39;sites-enabled&#39;
+include /usr/local/etc/nginx/sites-enabled/*
+# restart nginx
+$sudo nginx -s stop
+$sudo nginx</code></pre>
+
+<h2 id='nginx_and_uwsgi'>nginx and uWSGI</h2>
+
+<h3 id='uwsginginx'>建立uWSGI和nginx关联</h3>
+
+<pre><code>$uwsgi --socket :8001 --wsgi-file test.py
+# socket :8001: use protocol uwsgi, port 8001
+# 因为我们已经配置好nginx与uWSGI的8001端口关联了。现在的关系是：
+$the web client&lt;-&gt;the web server&lt;-&gt;the socket&lt;-&gt;uWSGI&lt;-&gt;Python</code></pre>
+
+<p>如果一切正常的话，那么我们的nginx与uWSGI之间已经建立了联系，我们的mysite_nginx.conf配置文件也配置正确了。</p>
+
+<h3 id='using_unix_sockets_instead_of_ports'>using unix sockets instead of ports</h3>
+
+<p>修改mysite_nginx.conf中的内容，将下列内容的注释取消掉</p>
+
+<pre><code>server unix:///path/to/your/mysite/mysite.sock; #这行的注释取消
+# server 127.0.0.1:8001; #将这行注释掉</code></pre>
+
+<p>再次运行uWSGI:</p>
+
+<pre><code>$uwsgi --socket mysite.sock --wsgi-file test.py
+# 如果上面的命令运行不了，查看下nginx的日志会发现是权限不足，换做下面的命令
+# nginx的日志默认在这个位置：&#39;/usr/local/Cellar/nginx/1.4.1/logs/error.log&#39;, 如果是通过&#39;brew&#39;安装的话。
+$uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 #(very permissive, maybe use 664)</code></pre>
+
+<h3 id='running_django_application_with_uwsgi_and_nginx'>running django application with uwsgi and nginx</h3>
+
+<p>运行下列命令：</p>
+
+<pre><code>$uwsgi --socket mysite.sock --module mysite.wsgi --chmod-socket=666</code></pre>
+
+<p>访问http:127.0.0.1:8000的话应该可以见到django项目的欢迎信息。</p>
+
+<h3 id='configuring_uwsgi_to_run_with_xml_file'>configuring uWSGI to run with .xml file</h3>
+
+<p>官方文档里面是使用的.ini配置文件，但是尝试了很多次都无法成功，后面改用.xml，it works。至于 .ini为什么不对，原因还不知道。我的.xml配置文件如下：</p>
+
+<pre><code># mysite_uwsgi.xml file
+&lt;uwsgi&gt;
+  &lt;socket&gt;/path/to/your/mytest/mytest.sock&lt;/socket&gt;
+  &lt;master/&gt;
+  &lt;chdir&gt;/path/to/your/mytest&lt;/chdir&gt;
+  &lt;module&gt;mytest.wsgi&lt;/module&gt;
+  &lt;chmod-socket&gt;666&lt;/chmod-socket&gt;
+&lt;/uwsgi&gt;</code></pre>
+
+<p>然后运行命令，没错的话，应该可以正常运行：</p>
+
+<pre><code>$uwsgi -x mysite_uwsgi.xml</code></pre>
+
+<h2 id='install_uwsgi_systemwide_and_using_emperor_mode'>install uWSGI system-wide and using Emperor mode</h2>
+
+<h3 id='install_uwsgi_systemwide'>install uWSGI system-wide</h3>
+
+<p>从virtualenv中退出：</p>
+
+<pre><code>$deactive</code></pre>
+
+<p>在系统中安装uWSGI</p>
+
+<pre><code>$sudo pip install uwsgi
+# or install LTS(long term support)
+$sudo pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz
+# 在project mysite下运行测试下是否安装成功
+$uwsgi -x mysite_uwsgi.xml </code></pre>
+
+<h3 id='using_emperor_mode'>using emperor mode</h3>
+
+<pre><code>$sudo mkdir /etc/uwsgi
+$sudo mkdir /etc/uwsgi/vassals
+# symlink from the default config directory to your config file
+$sudo ln -s /path/to/your/mysite/mysite_uwsgi.xml /etc/uwsgi/vassals
+# run the emperor
+$uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+# add &#39;sudo&#39; maybe.</code></pre>
+
+<h2 id='reference'>reference:</h2>
+
+<ol>
+<li>uwsgi wiki on readthedocs<a href='https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html'>Django and nginx</a></li>
+
+<li>install virtualenv and pip <a href='http://www.v2ex.com/t/42760'>Install virtualenv and pip&#8211;from v2ex</a></li>
+
+<li>Django 服务器的选择<a href='http://blog.csdn.net/bo5509/article/details/8200942'>Django服务器的选择</a></li>
+</ol>
+					<div class="meta">
+						<p class="date-publish">
+							Published: 
+							<date class="date-pub" title="2013-05-20T00:00:00+08:00" datetime="2013-05-20T00:00:00+08:00" pubdate>
+							<span class="month"><abbr>May</abbr></span>
+							<span class="day">20</span>
+							<span class="year">2013</span>
+							</date>
+						</p>
+						<ul class="list-category list-linear">
+							<li class="list-head">category: </li>
+							
+							
+
+
+  
+     
+    	<li><a href="/categories.html#programming-ref">
+    		programming <span>2</span>
+    	</a></li>
+    
+  
+
+
+						</ul>
+						<ul class="list-tag list-linear">
+							<li class="list-head">tags: </li>
+							
+							
+
+
+  
+     
+    	<li><a href="/tags.html#Django-ref">Django <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#uWSGI-ref">uWSGI <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#nginx-ref">nginx <span>1</span></a></li>
+    
+  
+
+
+
+						</ul>
+					</div><!-- meta -->
+				</div><!-- entry-content -->
+				<div class="misc-content">
+					<div class="social">
+						<ul class="list-linear">
+							<li><div class="twitter-tweet"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="" data-lang="en">Tweet</a></div></li>
+							<li><div class="twitter-follow"><a href="https://twitter.com/" class="twitter-follow-button" data-show-count="false" data-lang="en"></a></div></li>
+						</ul>
+					</div>
+					<div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'teddy007'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+					</div>
+				</div><!-- misc-content -->
+			</div><!-- bd -->
+			<footer class="unit-foot">
+				<div class="unit-inner unit-foot-inner">
+					<nav class="pagination">
+						<ul>
+							
+							<li class="prev"><a class="internal" rel="prev"  href="/life/2013/04/21/2013-goals" title="View 2013 Goals">&laquo; 2013 Goals</a></li>
+							
+							
+							
+						</ul>
+					</nav>
+					<p class="gotop">
+						<a href="#page">Back to Top</a>
+					</p>
+				</div>
+			</footer>
+
+		</div><!-- content -->
+	</div><!-- unit-inner -->
+</article>
+
+
+				</div>
+			</div><!-- unit-inner -->
+		</div><!-- unit-body -->
+	</div><!-- body -->
+	<footer class="the-footer">
+		<div class="unit-foot">
+			<div class="unit-inner unit-foot-inner">
+				<div class="misc vcard">
+					<h4>about</h4>
+					<ul>
+						<li class="contact"><address><span class="author fn n">Teddy</span> - <span class="fn email">i.kenting@gmail.com</span></address></li>
+						<li class="github"><a href="http://github.com/saturnisbig/" rel="me">github.com/saturnisbig</a></li>
+                        <!--
+						<li class="twitter"><a href="http://twitter.com//" rel="me">twitter.com/</a></li>
+                        -->
+						<li class="weibo"><a href="http://weibo.com/saturnisbig/" rel="me">weibo.com/saturnisbig</a></li>
+						<li class="rss"><a href="/atom.xml">订阅</a></li>
+					</ul>
+				</div><!-- misc -->
+				<p class="licence">
+                    Theme: based on <a href="http://jekyllbootstrap.com/">Jekyll-bootstrap</a>.<br>
+                    Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> 
+                    and <a href="http://pages.github.com/">Github Pages</a>.<br>
+                    <!--
+                    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.en"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" /></a>
+                    -->
+                    版权声明:<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">CC BY-NC-SA 3.0</a>
+                </p>
+            </div><!-- unit-foot-inner -->
+        </div><!-- unit-foot -->
+    </footer>
+</div><!-- page -->
+ <script>
+     /*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+ (function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c=j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>
+
+
+</body>
+</html>
+
