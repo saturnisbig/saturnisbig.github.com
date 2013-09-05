@@ -8,6 +8,7 @@ http://saturnisbig.github.com/atom.xml
 http://saturnisbig.github.com/sitemap.txt
 http://saturnisbig.github.com/pages.html
 
+http://saturnisbig.github.com/life/2013/09/06/quedian
 http://saturnisbig.github.com/programming/2013/05/20/setting-django-web-server-using-uwsgi-and-nginx-on-mac
 http://saturnisbig.github.com/life/2013/04/21/2013-goals
 http://saturnisbig.github.com/2013/04/01/chaojia

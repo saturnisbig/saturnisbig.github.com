@@ -1,0 +1,17 @@
+---
+layout: post
+title: "ios 开发资料汇集"
+description: ""
+categories: [ios-dev]
+tags: [ios dev, 资料]
+---
+{% include JB/setup %}
+
+# IOS 开发的资料
+
+* UITableView
+
+Teach how to make a app with navigation and table view using storyboards.
+
+http://www.appcoda.com/use-storyboards-to-build-navigation-controller-and-table-view/
+

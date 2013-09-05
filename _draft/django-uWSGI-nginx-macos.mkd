@@ -1,0 +1,243 @@
+---
+layout: post
+title: "Setting up Django with uWSGI and nginx on a Mac"
+description: ""
+categories: [programming]
+tags: [Django, uWSGI, nginx, mac]
+---
+{% include JB/setup %}
+
+# Setting up Django using uWSGI and nginx on a Mac
+
+
+## Prepare work
+
+- Install Homebrew to manage your package on mac
+因为之前安装了macport来管理软件包，安装homebrew之前想先把macport卸载了。官方文档提示作法如下：
+
+
+    $
+
+- Install virtualenv and pip
+
+
+## Install uWSGI and configuration
+
+- create a virtual env and django project for this tutorial
+
+
+    $cd ~
+    $mkdir env
+    $cd env
+    $virtualenv uwsgi-tutorial
+    # this create a virtual env for this tutorial
+    $cd uswgi-tutorial
+    $pip install django
+    $django-admin.py startproject mysite    # this create a project under uwsgi-tutorial named: mysite
+
+
+- install uWSGI into your virtualenv
+
+
+    $pip install uwsgi
+    # uwsgi will locate in this place: '/Users/yourname/uswgi-tutorial/bin'
+
+
+- test your uWSGI
+
+
+    # test.py
+    def application(env, start_response):
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return "Hello World"
+
+    # Run uWSGI
+    $uwsgi --http :8000 --wsgi-file test.py
+
+    # The options here means:
+    #http :8000: use protocol http, port 80000
+    #wsgi-file text.py:load the specified file, test.py
+    # on your browser visit: http://127.0.0.1:8000, and you will see "Hello World"
+    # if this works, it means the connection as follow
+    the web client <->uWSGi<->Python
+
+
+- test your Django project
+
+    $python manage.py runserver 0.0.0.0:8000
+    # visit http:localhost:8000, if this work, run it using uWSGI
+    $uwsgi --http :8000 --module mysite.wsgi
+    # module mysite.wsgi: load the specified wsgi module.
+    # this means the connection as follow:
+    the web client<->uWSGI<->Django
+
+
+## Basic nginx
+
+- install nginx on a mac using Homebrew
+
+    $brew install nginx     
+    # install nginx in this place: '/usr/local/etc/nginx/'
+    # you could start nginx by this command, but you will get some errors, telling you
+    # that 'can't find the nginx.conf file'. so we need some default setting for nginx.
+    $sudo nginx
+    # use the default configuration for nginx
+    $sudo cp /urs/local/etc/nginx/nginx.conf.default /usr/local/etc/nginx/nginx.conf
+    $sudo cp /urs/local/etc/nginx/mime.types.default /usr/local/etc/nginx/mime.types
+    # now run this command, and visit this address:http://127.0.0.1:8080, and will see
+    # some nginx welcom message.
+    $sudo nginx
+    
+
+- configure nginx for your site
+
+将nginx安装目录下的'uwsgi\_params' 文件拷贝到你的project目录下。
+
+
+    $sudo cp /usr/local/etc/nginx/uwsgi_params ./
+
+
+    # the content inside your nginx configuration file, we name it: 'mysite_nginx.conf'
+
+    # the upstream component nginx needs to connect to
+    upstream django {
+        # server unix:////path/to/your/mysite/mysite.sock; # for a socket
+        server 127.0.0.1:8001
+    }
+    # configuration of the server
+    server {
+        the port your site will be served on
+        listen 8000;
+        the domain name it will serve for
+        server_name localhost;
+        charset utf-8;
+
+        max upload size
+        client_max_body_size 75M;
+
+        # Django media
+        location /media {
+            alias /path/to/your/mysite/mysite/media; # your django project's media file
+        }
+        location /static {
+            alias /path/to/your/mysite/mysite/static; #your django project's static file.
+        }
+        # finally, send all non-media requests to the django server.
+        location / {
+            uwsgi_pass django;
+            include /path/to/you/mysite/uwsgi_params;
+        }
+    }
+
+
+之后，在nginx的默认配置文件中添加下面命令
+
+
+    $sudo mkdir /usr/local/etc/nginx/sites-enabled
+    # symlink to this file from '/usr/local/etc/nginx/sites-enabled/', so nginx can see it.
+    $sudo ln -s ~/path/to/your/mysite/mysite_nginx.conf /usr/local/etc/nginx/sites-enabled/
+    $vim /usr/local/etc/nginx/nginx.conf
+    # add this to the end of 'nginx.conf' file, inside the 'http' part before the end '}' char.
+    # make nginx to include the file inside 'sites-enabled'
+    include /usr/local/etc/nginx/sites-enabled/*
+    # restart nginx
+    $sudo nginx -s stop
+    $sudo nginx
+
+## nginx and uWSGI 
+
+### 建立uWSGI和nginx关联
+
+
+    $uwsgi --socket :8001 --wsgi-file test.py
+    # socket :8001: use protocol uwsgi, port 8001
+    # 因为我们已经配置好nginx与uWSGI的8001端口关联了。现在的关系是：
+    $the web client<->the web server<->the socket<->uWSGI<->Python
+
+
+如果一切正常的话，那么我们的nginx与uWSGI之间已经建立了联系，我们的mysite\_nginx.conf配置文件也配置正确了。
+
+### using unix sockets instead of ports
+
+修改mysite\_nginx.conf中的内容，将下列内容的注释取消掉
+
+
+    server unix:///path/to/your/mysite/mysite.sock; #这行的注释取消
+    # server 127.0.0.1:8001; #将这行注释掉
+
+
+再次运行uWSGI:
+
+
+    $uwsgi --socket mysite.sock --wsgi-file test.py
+    # 如果上面的命令运行不了，查看下nginx的日志会发现是权限不足，换做下面的命令
+    # nginx的日志默认在这个位置：'/usr/local/Cellar/nginx/1.4.1/logs/error.log', 如果是通过'brew'安装的话。
+    $uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 #(very permissive, maybe use 664)
+
+
+### running django application with uwsgi and nginx
+运行下列命令：
+
+
+    $uwsgi --socket mysite.sock --module mysite.wsgi --chmod-socket=666
+
+
+访问http:127.0.0.1:8000的话应该可以见到django项目的欢迎信息。
+
+### configuring uWSGI to run with .xml file
+官方文档里面是使用的.ini配置文件，但是尝试了很多次都无法成功，后面改用.xml，it works。至于
+.ini为什么不对，原因还不知道。我的.xml配置文件如下：
+
+
+    # mysite_uwsgi.xml file
+    <uwsgi>
+      <socket>/path/to/your/mytest/mytest.sock</socket>
+      <master/>
+      <chdir>/path/to/your/mytest</chdir>
+      <module>mytest.wsgi</module>
+      <chmod-socket>666</chmod-socket>
+    </uwsgi>
+
+
+然后运行命令，没错的话，应该可以正常运行：
+
+
+    $uwsgi -x mysite_uwsgi.xml
+
+
+## install uWSGI system-wide and using Emperor mode
+
+### install uWSGI system-wide
+从virtualenv中退出：
+
+
+    $deactive
+
+
+在系统中安装uWSGI
+
+
+    $sudo pip install uwsgi
+    # or install LTS(long term support)
+    $sudo pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz
+    # 在project mysite下运行测试下是否安装成功
+    $uwsgi -x mysite_uwsgi.xml 
+
+
+### using emperor mode
+
+
+    $sudo mkdir /etc/uwsgi
+    $sudo mkdir /etc/uwsgi/vassals
+    # symlink from the default config directory to your config file
+    $sudo ln -s /path/to/your/mysite/mysite_uwsgi.xml /etc/uwsgi/vassals
+    # run the emperor
+    $uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+    # add 'sudo' maybe.
+
+
+## reference:
+1. uwsgi wiki on readthedocs[Django and nginx](https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html)
+2. install virtualenv and pip [Install virtualenv and pip--from v2ex](http://www.v2ex.com/t/42760)
+3. Django 服务器的选择[Django服务器的选择](http://blog.csdn.net/bo5509/article/details/8200942)
+
