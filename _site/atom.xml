@@ -4,7 +4,7 @@
  <title>Teddy Food</title>
  <link href="http://saturnisbig.github.com/atom.xml" rel="self"/>
  <link href="http://saturnisbig.github.com"/>
- <updated>2013-09-06T01:10:31+08:00</updated>
+ <updated>2013-12-16T23:37:06+08:00</updated>
  <id>http://saturnisbig.github.com</id>
  <author>
    <name>Teddy</name>
@@ -306,17 +306,11 @@
    <content type="html">&lt;h1 id='2013maybe_add_more_later'&gt;2013年目标(maybe add more later&amp;#8230;)&lt;/h1&gt;
 
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;结婚 (marry with pudding)&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;s&gt;结婚 (marry with pudding, done 2013-11-30, married day 2013-09-24)&lt;/s&gt;&lt;/li&gt;
 
-&lt;li&gt;
-&lt;p&gt;买房 (not sure.)&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;s&gt;买房 (not sure. done 2013-08-30)&lt;/s&gt;&lt;/li&gt;
 
-&lt;li&gt;
-&lt;p&gt;换手机(done)&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;s&gt;换手机(done)&lt;/s&gt;&lt;/li&gt;
 
 &lt;li&gt;
 &lt;p&gt;制作一款手机应用 (something to manage list things.)&lt;/p&gt;
@@ -326,12 +320,10 @@
 &lt;p&gt;看很多书 (小说，programming，心理学etc.)&lt;/p&gt;
 &lt;/li&gt;
 
-&lt;li&gt;
-&lt;p&gt;买一台苹果的电脑(done 2013-03-29:Mac mini, 2013-04-19:display, BenQ GL2023)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;li&gt;&lt;s&gt;买一台苹果的电脑(done 2013-03-29:Mac mini, 2013-04-19:display, BenQ GL2023)&lt;/s&gt;&lt;/li&gt;
 
-&lt;p&gt;- 跟布丁乘火车去旅游&lt;/p&gt;
+&lt;li&gt;&lt;s&gt;跟布丁乘火车去旅游(done 2013-12-03 To 2013-12-09)&lt;/s&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;- 学游泳&lt;/p&gt;
 
