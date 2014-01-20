@@ -2,7 +2,7 @@
 layout: post
 title: "VIM python indent setting"
 description: "设置VIM中Python的缩进"
-category: [tools]
+category: tools
 tags: [vim, python, indent]
 ---
 {% include JB/setup %}
