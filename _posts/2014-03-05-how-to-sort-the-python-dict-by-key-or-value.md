@@ -14,28 +14,28 @@ tags: [sort, python dictionary]
 1. sorted a dict by keys(Python2.4 or greater)
 
 
-    mydict = {
-        '2014-02-03': ['item1', 'item2'],
-        '2014-02-05': ['item2-1', 'item2-2']
-    }
-    for key in sorted(mydict.iterkeys()):
-        print "%s: %s" % (key, mydict[key])
+        mydict = {
+            '2014-02-03': ['item1', 'item2'],
+            '2014-02-05': ['item2-1', 'item2-2']
+        }
+        for key in sorted(mydict.iterkeys()):
+            print "%s: %s" % (key, mydict[key])
 
 
 2. sorted by key(Python older than 2.4)
 
 
-    keylist = mydict.keys()
-    keylist.sort()
-    for key in keylist:
-        print "%s: %s" % (key, mydict[key])
+        keylist = mydict.keys()
+        keylist.sort()
+        for key in keylist:
+            print "%s: %s" % (key, mydict[key])
 
 
 3. sorted a dict by value(Python2.4 or greater)
 
 
-    for k, v in sorted(mydict.iteritems(), key=lambda (k, v): (v, k)):
-        print "%s: %s" % (k, v)
+        for k, v in sorted(mydict.iteritems(), key=lambda (k, v): (v, k)):
+            print "%s: %s" % (k, v)
 
 
 我需要对数据排序后，在模板中按照排的顺序显示出来：
