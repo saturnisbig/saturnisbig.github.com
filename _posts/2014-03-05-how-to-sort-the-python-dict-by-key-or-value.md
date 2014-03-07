@@ -2,8 +2,8 @@
 layout: post
 title: "How to sort the Python dict by key or value"
 description: ""
-category: [Python]
-tags: [sort, python dictionary]
+categories: [Python]
+tags: [sort, python dict]
 ---
 {% include JB/setup %}
 
@@ -12,7 +12,6 @@ tags: [sort, python dictionary]
 对字典排序有一下几种方法：
 
 1. sorted a dict by keys(Python2.4 or greater)
-
 
         mydict = {
             '2014-02-03': ['item1', 'item2'],
@@ -24,7 +23,6 @@ tags: [sort, python dictionary]
 
 2. sorted by key(Python older than 2.4)
 
-
         keylist = mydict.keys()
         keylist.sort()
         for key in keylist:
@@ -32,7 +30,6 @@ tags: [sort, python dictionary]
 
 
 3. sorted a dict by value(Python2.4 or greater)
-
 
         for k, v in sorted(mydict.iteritems(), key=lambda (k, v): (v, k)):
             print "%s: %s" % (k, v)
