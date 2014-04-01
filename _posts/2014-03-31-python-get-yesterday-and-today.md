@@ -2,7 +2,7 @@
 layout: post
 title: "python get yesterday and today"
 description: ""
-categories:[Python] 
+categories: [Python]
 tags: [python, datetime]
 ---
 {% include JB/setup %}
