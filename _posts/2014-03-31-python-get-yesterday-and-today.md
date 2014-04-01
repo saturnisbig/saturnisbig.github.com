@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "python 计算昨天和明天的日期"
+title: "python get yesterday and today"
 description: ""
-categories:[Python Cookbook Example] 
+categories:[Python] 
 tags: [python, datetime]
 ---
 {% include JB/setup %}
