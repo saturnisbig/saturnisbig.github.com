@@ -21,6 +21,8 @@ UIButton在selected状态下也将图片显示了出来。
 
 2. 判断UIButton所处的状态，将setImage的image设为nil
 
+
+
         if (!btn.isSelected && btn.isEnabled) {
             [btn setImage: backImage forState:UIControlStateNormal];
         } else {
