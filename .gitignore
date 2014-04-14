@@ -1,4 +1,5 @@
 _draft/
-_site/runserver/
+
 _site/*
 
+.DS_Store
