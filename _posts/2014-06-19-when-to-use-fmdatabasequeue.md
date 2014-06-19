@@ -2,7 +2,7 @@
 layout: post
 title: "When to use FMDatabaseQueue"
 description: ""
-categories:[ios-dev]
+categories: [ios-dev]
 tags: [iOS-dev, FMDatabaseQueue]
 ---
 {% include JB/setup %}
