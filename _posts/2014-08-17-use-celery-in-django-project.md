@@ -15,10 +15,12 @@ tags: [Django, Celery, Ubuntu]
 1. 软件的安装
 
 安装RabbitMQ以及启动RabbitMQ:
+
         $sudo apt-get install rabbitmq-server
         $sudo rabbitmq-server -detached
 
 安装celery:
+
         $pip install celery
 
 2. 在项目中使用所需配置
@@ -55,7 +57,7 @@ tags: [Django, Celery, Ubuntu]
         
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yqrelax.settings')
         
-        app = Celery('yqrelax', backend='amqp', broker='amqp://guest@localhost/')
+        app = Celery('yqrelax', backend='amqp',broker='amqp://guest@localhost/')
         app.config_from_object('django.conf:settings')
         
         app.conf.CELERYBEAT_SCHEDULE = {
